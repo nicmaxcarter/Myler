@@ -3,14 +3,14 @@
 # Sprint
 
 # ----WEDNESDAY-------------------------
- Create Vehicle Database
- Create connection to database
- Refine basic vehicle object
- Create temp structure of database for testing. Only need to store Vehicle objects
- Clean up main feed of vehicles
- Set page to populate based off database
- Allow user to add vehicle to database from app
- Access VIN API database
+\n Create Vehicle Database
+\n Create connection to database
+\n Refine basic vehicle object
+\n Create temp structure of database for testing. Only need to store Vehicle objects
+\n Clean up main feed of vehicles
+\n Set page to populate based off database
+\n Allow user to add vehicle to database from app
+\n Access VIN API database
 
 # ----THURSDAY-------------------------
  Elaborate on vehicle properties
