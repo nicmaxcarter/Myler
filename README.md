@@ -13,20 +13,20 @@
 <br /> Access VIN API database
 
 # ----THURSDAY-------------------------
- Elaborate on vehicle properties
- Elaborate on database structure
- Pull information from VIN API database
- Set checks for reminder everyday
- Set reminders and appropriate intervals
- Add feature to search for mechanic shop
+<br /> Elaborate on vehicle properties
+<br /> Elaborate on database structure
+<br /> Pull information from VIN API database
+<br /> Set checks for reminder everyday
+<br /> Set reminders and appropriate intervals
+<br /> Add feature to search for mechanic shop
 
 # ----FRIDAY-------------------------
- Populate vehicle information from VIN
- Create user accounts ?? possibly just local
- Tie vehicles to user account
- Tie drivers to vehicle
+<br /> Populate vehicle information from VIN
+<br /> Create user accounts ?? possibly just local
+<br /> Tie vehicles to user account
+<br /> Tie drivers to vehicle
 
 # ----SATURDAY-------------------------
- Clean UI
- Fix bugs
- Finish everything loser and get it over with. You got living to get on with.
+<br /> Clean UI
+<br /> Fix bugs
+<br /> Finish everything loser and get it over with. You got living to get on with.
