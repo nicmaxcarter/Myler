@@ -16,4 +16,5 @@
         completions."
     </string>
     <string name="title_activity_new_vehicle">NewVehicleActivity</string>
+    <string name="title_activity_temp">TempActivity</string>
 </resources>
