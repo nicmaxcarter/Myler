@@ -8,6 +8,8 @@ import android.view.Window;
 
 public class LandingActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -15,9 +17,11 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
     }
 
-    protected void onEnter(View view) {
-        Intent intent = new Intent(this, Garage.class);
-
-        startActivity(intent);
-    }
+    // Sends user into the login page as does not allow them to return
+//    private void loadLogInView() {
+//        Intent intent = new Intent(this, LoginActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
+//    }
 }
