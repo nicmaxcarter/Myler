@@ -25,10 +25,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="bottom">
-        <EditText
-            android:id="@+id/todoText"
+        <View
+            android:id="@+id/borderSeparator"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"/>
         <Button
             android:id="@+id/addButton"
             android:layout_width="match_parent"

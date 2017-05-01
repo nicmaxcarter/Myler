@@ -16,4 +16,10 @@
     <string name="title_activity_login">Sign in</string>
     <string name="add_item">Add New Item</string>
     <string name="action_logout">Logout</string>
+    <string name="make">Make</string>
+    <string name="model">Model</string>
+    <string name="VINNumber">VIN Number</string>
+    <string name="year">Year</string>
+    <string name="miles">Miles</string>
+    <string name="addVehicle">Add Vehicle</string>
 </resources>

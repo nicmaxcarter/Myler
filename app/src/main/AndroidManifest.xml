@@ -30,7 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity"></activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".NewVehicleActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
