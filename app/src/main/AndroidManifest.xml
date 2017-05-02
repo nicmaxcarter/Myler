@@ -32,10 +32,15 @@
         </activity>
         <activity
             android:name=".SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".NewVehicleActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VehicleProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".UpdateMileageActivity" />
+        <activity android:name=".RecommendedServiceActivity"></activity>
     </application>
 
 </manifest>

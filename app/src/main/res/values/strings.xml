@@ -22,4 +22,15 @@
     <string name="year">Year</string>
     <string name="miles">Miles</string>
     <string name="addVehicle">Add Vehicle</string>
+    <string name="add_vehicle">New Vehicle</string>
+    <string name="oilChange">Mileage of Last Oil Change</string>
+    <string name="oilChangeTitle">Oil Change</string>
+    <string name="lastOilChangeTitle">Last:</string>
+    <string name="next_oil_change">Next:</string>
+    <string name="update_mileage">Update Mileage</string>
+    <string name="update_oil_change">Update Oil Change</string>
+    <string name="recommended_servicing">Recommended Servicing</string>
+    <string name="deleteVehicle">Delete Vehicle</string>
+    <string name="recent_services">Recent Services</string>
+    <string name="all_services">All Services</string>
 </resources>

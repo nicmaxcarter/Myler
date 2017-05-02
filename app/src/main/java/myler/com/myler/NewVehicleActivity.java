@@ -2,8 +2,10 @@ package myler.com.myler;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +41,9 @@ public class NewVehicleActivity extends AppCompatActivity {
 
     public String xmlOutput;
 
-    EditText vin, make, model, year, miles;
+    public String API_URL;
+
+    EditText vin, make, model, year, miles, mileOilChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,41 +65,72 @@ public class NewVehicleActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         xmlOutput = "";
 
-        // Set auto populate
-        autoPop.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                new RetrieveFeedTask().execute();
-            }
-        });
 
         // Get vehicle properties from activity
         vin = (EditText) findViewById(R.id.VinET);
+
         make = (EditText) findViewById(R.id.makeET);
+
         model = (EditText) findViewById(R.id.modelET);
+
         year = (EditText) findViewById(R.id.yearET);
+        year.setInputType(InputType.TYPE_CLASS_NUMBER);
+
         miles = (EditText) findViewById(R.id.milesET);
+        miles.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        mileOilChange = (EditText) findViewById(R.id.oilChangeET);
+        mileOilChange.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        // Set auto populate
+        autoPop.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                if (vin.getText().toString().equals("")){
+                    new AlertDialog.Builder(NewVehicleActivity.this).setTitle("Whoops!").setMessage("Please enter a valid VIN Number.").show();
+                } else {
+                    API_URL = "https://vpic.nhtsa.dot.gov/api//vehicles/DecodeVinValues/" + vin.getText() + "?format=xml";
+                    new RetrieveFeedTask().execute();
+                }
+            }
+        });
 
         final Button button = (Button) findViewById(R.id.addVehicleBtn);
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
 
+                boolean good = true;
+
                 final Vehicle vehicle = new Vehicle();
 
                 // set vehicle properties
 
-                /////////////////////// COME BACK AND ADD SAFETY FEATURES TO PREVENT APP CRASH //////////////////////////////
+                // Check that each field is filled correctly
+                if( vin.getText().toString().equals("") || make.getText().toString().equals("") || model.getText().toString().equals("")
+                        || year.getText().toString().equals("") || miles.getText().toString().equals("")) {
+                    good = false;
+                }
 
-                vehicle.setVin(vin.getText().toString());
-                vehicle.setMake(make.getText().toString());
-                vehicle.setModel(model.getText().toString());
-                vehicle.setYear(Integer.parseInt(year.getText().toString()));
-                vehicle.setOriginal_miles(Integer.parseInt(miles.getText().toString()));
+                if(good) {
+                    vehicle.setVin(vin.getText().toString().toUpperCase());
+                    vehicle.setMake(make.getText().toString().toUpperCase());
+                    vehicle.setModel(model.getText().toString().toUpperCase());
+                    vehicle.setYear(Integer.parseInt(year.getText().toString()));
+                    vehicle.setOriginal_miles(Integer.parseInt(miles.getText().toString()));
+                    vehicle.setLast_oil_change(Integer.parseInt(mileOilChange.getText().toString()));
 
-                // add vehicle to database
-                mDatabase.child("Users").child(mUserId).child("Vehicles").push().setValue(vehicle);
+                    // add vehicle to database
+                    mDatabase.child("Users").child(mUserId).child("Vehicles").push().setValue(vehicle);
 
-                Intent intent = new Intent(NewVehicleActivity.this, Garage.class);
-                startActivity(intent);
+                    Intent intent = new Intent(NewVehicleActivity.this, Garage.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    
+                } else {
+                    new AlertDialog.Builder(NewVehicleActivity.this).setTitle("Whoops!").setMessage("Please fill out all fields").show();
+                }
+
+
             }
         });
     }
@@ -104,7 +139,6 @@ public class NewVehicleActivity extends AppCompatActivity {
         Log.d("OUTPUT:", xmlOutput);
         HashMap<String, String> values = parseXml(xmlOutput);
 //        responseView.setText("back to original");
-        vin.setText(values.get("vin"));
         make.setText(values.get("make"));
         model.setText(values.get("model"));
         year.setText(values.get("year"));
@@ -131,10 +165,10 @@ public class NewVehicleActivity extends AppCompatActivity {
 //                    Log.d("TAG","End tag "+xpp.getName());
                 } else if(eventType == XmlPullParser.TEXT) {
 //                    Log.d("TAG","Text "+xpp.getText()); // here you get the text from xml
-                } else if(eventType == XmlPullParser.START_TAG && xpp.getName().equals("VIN")) {
-//                    sb.append(xpp.nextText());
-//                    Log.d("TAG",xpp.nextText());
-                    values.put("vin", xpp.nextText());
+//                } else if(eventType == XmlPullParser.START_TAG && xpp.getName().equals("VIN")) {
+////                    sb.append(xpp.nextText());
+////                    Log.d("TAG",xpp.nextText());
+//                    values.put("vin", xpp.nextText());
                 } else if(eventType == XmlPullParser.START_TAG && xpp.getName().equals("Make")) {
                     values.put("make", xpp.nextText());
                 } else if(eventType == XmlPullParser.START_TAG && xpp.getName().equals("Model")) {
@@ -168,7 +202,7 @@ public class NewVehicleActivity extends AppCompatActivity {
             // Do some validation here
 
             try {
-                URL url = new URL("https://vpic.nhtsa.dot.gov/api//vehicles/DecodeVinValues/1FMCU14T5LUA04498?format=xml");
+                URL url = new URL(API_URL);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
