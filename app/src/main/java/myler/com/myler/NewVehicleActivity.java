@@ -106,7 +106,7 @@ public class NewVehicleActivity extends AppCompatActivity {
 
                 // Check that each field is filled correctly
                 if( vin.getText().toString().equals("") || make.getText().toString().equals("") || model.getText().toString().equals("")
-                        || year.getText().toString().equals("") || miles.getText().toString().equals("")) {
+                        || year.getText().toString().equals("") || miles.getText().toString().equals("") || mileOilChange.getText().toString().equals("")) {
                     good = false;
                 }
 
@@ -125,7 +125,7 @@ public class NewVehicleActivity extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    
+
                 } else {
                     new AlertDialog.Builder(NewVehicleActivity.this).setTitle("Whoops!").setMessage("Please fill out all fields").show();
                 }
@@ -138,10 +138,13 @@ public class NewVehicleActivity extends AppCompatActivity {
     public void afterPost() {
         Log.d("OUTPUT:", xmlOutput);
         HashMap<String, String> values = parseXml(xmlOutput);
-//        responseView.setText("back to original");
-        make.setText(values.get("make"));
-        model.setText(values.get("model"));
-        year.setText(values.get("year"));
+        if(!values.get("error code").substring(0,1).equals("0")){
+            new AlertDialog.Builder(NewVehicleActivity.this).setTitle("Whoops!").setMessage("Please enter a valid VIN number").show();
+        } else {
+            make.setText(values.get("make"));
+            model.setText(values.get("model"));
+            year.setText(values.get("year"));
+        }
     }
 
     public HashMap<String, String> parseXml(String str){
@@ -175,6 +178,9 @@ public class NewVehicleActivity extends AppCompatActivity {
                     values.put("model", xpp.nextText());
                 } else if(eventType == XmlPullParser.START_TAG && xpp.getName().equals("ModelYear")) {
                     values.put("year", xpp.nextText());
+                } else if(eventType == XmlPullParser.START_TAG && xpp.getName().equals("ErrorCode")) {
+                    Log.d("IT Happened!!!", "wtf");
+                    values.put("error code", xpp.nextText());
                 }
                 eventType = xpp.next();
             }

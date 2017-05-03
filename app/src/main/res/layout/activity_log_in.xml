@@ -9,15 +9,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LogInActivity" >
 
+
+    <ImageView
+        android:id="@+id/logInLogoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/myler_logo_login" />
+
     <EditText
         android:id="@+id/emailField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:hint="@string/email_hint" >
+        android:hint="@string/email_hint"
+        android:layout_below="@+id/logInLogoView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="21dp">
 
         <requestFocus />
     </EditText>

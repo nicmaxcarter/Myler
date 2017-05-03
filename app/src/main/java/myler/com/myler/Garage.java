@@ -1,10 +1,12 @@
 package myler.com.myler;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.LoginFilter;
 import android.view.View;
 import android.widget.AdapterView;
@@ -52,7 +54,6 @@ public class Garage extends AppCompatActivity {
 
             // Set up ListView
             final ListView listView = (ListView) findViewById(R.id.listView);
-//            final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2, android.R.id.text1);
             final List<Map<String, String>> data = new ArrayList<>();
             final SimpleAdapter adapter = new SimpleAdapter(this, data, android.R.layout.simple_list_item_2,
                     new String[] {"title", "data"}, new int[] {android.R.id.text1, android.R.id.text2});
@@ -67,29 +68,12 @@ public class Garage extends AppCompatActivity {
                 }
             });
 
-            // Add button for sign out
-//            final Button signOutButton = (Button) findViewById(R.id.logOutButton);
-//            button.setOnClickListener(new View.OnClickListener(){
-//                public void onClick(View v) {
-////                    Intent intent = new Intent(Garage.this, LogInActivity.class);
-////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-////                    startActivity(intent);
-////                    mFirebaseAuth.signOut();
-//                }
-//            });
-
             // Navigate to Vehicle Profile
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                    mDatabase.child("Users").child(mUserId).child("Vehicles")
-//                            .orderByChild("")
                     HashMap<String, String> item = (HashMap<String, String>)listView.getItemAtPosition(position);
-//                    String data = item.get("data");
-//                    new AlertDialog.Builder(Garage.this).setTitle(data).setMessage("").show();
-
                     Intent intent = new Intent(Garage.this, VehicleProfileActivity.class);
                     intent.putExtra("specific_vin", item.get("data"));
                     startActivity(intent);
@@ -130,11 +114,29 @@ public class Garage extends AppCompatActivity {
     }
 
     public void onLogOut(View view) {
-        mFirebaseAuth.signOut();
-        Intent intent = new Intent(this, LogInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Are you sure?");
+
+        // Set up the buttons
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mFirebaseAuth.signOut();
+                Intent intent = new Intent(Garage.this, LogInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
 

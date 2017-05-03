@@ -33,4 +33,7 @@
     <string name="deleteVehicle">Delete Vehicle</string>
     <string name="recent_services">Recent Services</string>
     <string name="all_services">All Services</string>
+    <string name="future_services">Future Services</string>
+    <string name="past_services">Past Services</string>
+    <string name="aboutServiceButtons">Select \'past\' for previous recommended services. Select \'future\' for upcoming recommended services</string>
 </resources>

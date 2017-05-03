@@ -4,8 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     tools:context="myler.com.myler.RecommendedServiceActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/aboutServiceButtons"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,15 +23,17 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/pastServices"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            android:text="@string/recent_services"/>
+            android:text="@string/past_services"/>
         <Button
+            android:id="@+id/futureServices"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            android:text="@string/all_services"/>
+            android:text="@string/future_services"/>
     </LinearLayout>
 
     <ListView

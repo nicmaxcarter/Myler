@@ -267,6 +267,7 @@ public class VehicleProfileActivity extends AppCompatActivity {
 
     public void onViewRecServicing(View view) {
         Intent intent = new Intent(VehicleProfileActivity.this, RecommendedServiceActivity.class);
+        intent.putExtra("CurrentMiles", profileMiles.getText());
         startActivity(intent);
     }
 
@@ -328,23 +329,40 @@ public class VehicleProfileActivity extends AppCompatActivity {
 
     public void onDeleteVehicle(View view) {
 
-        final Vehicle[] vehicle = new Vehicle[1];
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Are you sure?");
 
-        DatabaseReference vehiclesRef = mDatabase.child("Users").child(mUserId).child("Vehicles");
-        vehiclesRef.orderByChild("vin").equalTo(specificVin).addListenerForSingleValueEvent(new ValueEventListener() {
-
+        // Set up the buttons
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                dataSnapshot.getRef().removeValue();
-                Intent intent = new Intent(VehicleProfileActivity.this, Garage.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+            public void onClick(DialogInterface dialog, int which) {
+
+                DatabaseReference vehiclesRef = mDatabase.child("Users").child(mUserId).child("Vehicles");
+                vehiclesRef.orderByChild("vin").equalTo(specificVin).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        dataSnapshot.getRef().removeValue();
+                        Intent intent = new Intent(VehicleProfileActivity.this, Garage.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
         });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
