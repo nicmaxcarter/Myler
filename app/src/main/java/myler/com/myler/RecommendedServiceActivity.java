@@ -1,6 +1,7 @@
 package myler.com.myler;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +26,8 @@ public class RecommendedServiceActivity extends AppCompatActivity {
             if (extras == null) {
                 currentMiles = 130000;
             } else {
-                currentMiles = extras.getInt("CurrentMiles");
+                currentMiles = Integer.parseInt(extras.get("CurrentMiles").toString());
+//                new AlertDialog.Builder(RecommendedServiceActivity.this).setTitle(currentMiles).setMessage("Please enter a valid VIN Number.").show();
             }
         } else {
             currentMiles = Integer.parseInt(savedInstanceState.getSerializable("CurrentMiles").toString());
